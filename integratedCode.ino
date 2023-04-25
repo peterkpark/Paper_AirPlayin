@@ -48,8 +48,8 @@ void setuppwm(){
    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_1, &pwm_config0);    //Configure PWM0A & PWM0B with above settings
    delay(20);
    mcpwm_set_frequency(MCPWM_UNIT_1, MCPWM_TIMER_1,freq0);
-   mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A, duty0);
-   mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_GEN_A, duty1);
+   mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, duty0);
+   mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_OPR_A, duty1);
    
  }
 void setup1() {
@@ -97,7 +97,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
         if (rxValue[1] == 'B') {
           bnum = rxValue[2] - '0'; // button number: UP is 5, RIGHT is 8, DOWN is 6, LEFT is 7
           pressed = rxValue[3] - '0'; // pressed will be 1 if button press and 0 if release
-          Serial.print ("Button "); Serial.print(bnum);
+          // Serial.print ("Button "); Serial.print(bnum);
 
 
           if (pressed) {
@@ -186,12 +186,16 @@ void loop() {
           {
             duty0++;
           }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_GEN_A, duty1);
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A, duty0);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_OPR_A, duty1);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, duty0);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here6: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
     if (bnum == 6 && pressed) // DOWN button pressed
@@ -209,12 +213,16 @@ void loop() {
           {
             duty0--;
           }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_GEN_A, duty1);
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A, duty0);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_OPR_A, duty1);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, duty0);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here5: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
     if (bnum == 7 && pressed) // LEFT button pressed
@@ -229,23 +237,30 @@ void loop() {
           {
             duty1--;
           }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_GEN_A, duty1);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_OPR_A, duty1);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here4: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
       while (duty1 != initialLeftSpeed)
       {
         if(count >= 40)
         {
           duty1++;
-        }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_GEN_A, duty1);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_1, MCPWM_OPR_A, duty1);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here3: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
 
@@ -254,7 +269,7 @@ void loop() {
     {
       int count = 0;
       int initialRightSpeed = duty0;
-      while(!(bnum == 7 && !pressed)) // while RIGHT button NOT released
+      while(!(bnum == 8 && !pressed)) // while RIGHT button NOT released
       {
         if(count >= 40)
         {
@@ -262,25 +277,34 @@ void loop() {
           {
             duty0--;
           }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A, duty0);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, duty0);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here2: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
       while (duty0 != initialRightSpeed)
       {
         if(count >= 40)
         {
           duty0++;
-        }
-          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_GEN_A, duty0);
+          mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, duty0);
           count = 0;
         }
-        _delay_ms(2);
+        delay(2);
         count++;
+        Serial.print("Here1: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
-    Serial.print("Right Motor Speed: " + to_str(duty0));
-    Serial.print("Left Motor Speed: " + to_str(duty1));
+    Serial.print("Right Motor Speed: ");
+    Serial.println(duty0);
+    Serial.print("Left Motor Speed: ");
+    Serial.println(duty1);
 }
