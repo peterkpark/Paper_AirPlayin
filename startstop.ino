@@ -202,6 +202,10 @@ void loop() {
         }
         delay(2);
         count++;
+        Serial.print("Here1: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
   }
@@ -236,6 +240,10 @@ void loop() {
         }
         delay(2);
         count++;
+        Serial.print("Here5: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
   }
@@ -265,6 +273,10 @@ void loop() {
         }
         delay(2);
         count++;
+        Serial.print("Here4: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
     while (duty1 != initialLeftSpeed)
@@ -277,6 +289,10 @@ void loop() {
       }
       delay(2);
       count++;
+        Serial.print("Here0: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
     }
   }
 
@@ -308,6 +324,10 @@ void loop() {
         }
         delay(2);
         count++;
+        Serial.print("Here3: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
       }
     }
     while (duty0 != initialRightSpeed)
@@ -320,6 +340,10 @@ void loop() {
       }
       delay(2);
       count++;
+        Serial.print("Here2: ");
+        Serial.print(duty0);
+        Serial.print(", ");
+        Serial.println(duty1);
     }
   }
 }
